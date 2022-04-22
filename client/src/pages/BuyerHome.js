@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <main>
       <div>
-        <h1>TBC</h1>
+        <h1>Buyer Roadmap</h1>
       
       </div>
     </main>
