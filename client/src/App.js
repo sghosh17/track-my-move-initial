@@ -48,8 +48,10 @@ function App() {
           <Header />
           <div className="container">
             <Routes>
-              <Route path="/" element={<BuyerHome />} />
+              {/* bring role from signup, render correct homepage depending on role */}
 
+              <Route path="/" element={<BuyerHome />} />
+              <Route path="/estate" element={<EstateHome />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/me" element={<Profile />} />

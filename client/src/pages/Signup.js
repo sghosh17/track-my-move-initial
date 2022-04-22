@@ -78,13 +78,12 @@ const Signup = () => {
                 />
 
                 <select
-                  value={formState.role}
                   className="form-input"
                   name="role"
                   onChange={handleChange}
                 >
-                  <option value="estateAgent">Estate Agent</option>
-                  <option value="buyer">Buyer</option>
+                  <option>Estate Agent</option>
+                  <option>Buyer</option>
                 </select>
 
                 <button
