@@ -65,3 +65,17 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const EDIT_USER = gql`
+  mutation editUser($name: String!, $address: String!, $phone: String!) {
+    editUser(name: $name, address: $address, phone: $phone) {
+      _id
+      username
+      email
+      role
+      name
+      address
+      phone
+    }
+  }
+`;

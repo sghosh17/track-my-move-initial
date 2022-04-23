@@ -35,6 +35,14 @@ class AuthService {
     localStorage.setItem("id_token", idToken);
 
     window.location.assign("/");
+
+  }
+
+  signIn(idToken) {
+    localStorage.setItem("id_token", idToken);
+
+    window.location.assign("/editProfile");
+
   }
 
   logout() {

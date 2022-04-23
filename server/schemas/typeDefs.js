@@ -7,6 +7,9 @@ const typeDefs = gql`
     email: String
     role: String
     password: String
+    name: String
+    address: String
+    phone: String
     comments: [Comment]!
   }
 
@@ -38,6 +41,7 @@ const typeDefs = gql`
       password: String!
       role: String!
     ): Auth
+    editUser(name: String!, address: String!, phone: String!): User
     login(email: String!, password: String!): Auth
     addComment(commentText: String!): Comment
     removeComment(commentId: ID!): Comment

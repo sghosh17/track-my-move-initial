@@ -13,6 +13,7 @@ import EstateHome from "./pages/EstateHome";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Auth from "./utils/auth";
@@ -68,6 +69,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
+              <Route path="/editProfile" element={<ProfileEdit />} />
             </Routes>
           </div>
           <Footer />
