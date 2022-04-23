@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Auth from "./utils/auth";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -41,6 +42,8 @@ const client = new ApolloClient({
 });
 
 function App() {
+  console.log(localStorage.getItem("id_token"))
+  console.log(Auth.getProfile())
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -50,8 +53,17 @@ function App() {
             <Routes>
               {/* bring role from signup, render correct homepage depending on role */}
 
-              <Route path="/" element={<BuyerHome />} />
-              <Route path="/estate" element={<EstateHome />} />
+              <Route
+                path="/"
+                element={
+                  Auth.getProfile()?.data?.role === "Buyer" ? (
+                    <BuyerHome />
+                  ) : (
+                    <EstateHome />
+                  )
+                }
+              />
+             
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/me" element={<Profile />} />
