@@ -31,6 +31,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -48,6 +49,7 @@ const resolvers = {
 
       return { token, user };
     },
+
     addComment: async (parent, { commentText }, context) => {
       if (context.user) {
         const comment = await Comment.create({
@@ -61,6 +63,18 @@ const resolvers = {
         );
 
         return comment;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
+    editUser: async (parent, { name, address, phone }, context) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { name: name, address: address, phone: phone } }
+        );
+
+        return user;
       }
       throw new AuthenticationError("You need to be logged in!");
     },

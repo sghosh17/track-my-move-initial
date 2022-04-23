@@ -1,19 +1,17 @@
 import React, { useState, Component } from "react";
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../utils/mutations";
+import { EDIT_USER } from "../utils/mutations";
 
-import Auth from "../utils/auth";
+//import Auth from "../utils/auth";
 
-const Signup = () => {
+const ProfileEdit = () => {
   const [formState, setFormState] = useState({
-    username: "",
-    email: "",
-    password: "",
-    role: "",
+    name: "",
+    address: "",
+    phone: "",
   });
-  const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [editUser, { error, data }] = useMutation(EDIT_USER);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -29,13 +27,15 @@ const Signup = () => {
     console.log(formState);
 
     try {
-      const { data } = await addUser({
+      const { data } = await editUser({
         variables: { ...formState },
       });
 
-      Auth.signIn(data.addUser.token); //Redirect to Buyer Profile form
+      window.location.assign("/me");
+
+      // Auth.login(data.addUser.token);
     } catch (e) {
-      console.error(e);
+      console.log(e.networkError.result.errors);
     }
   };
 
@@ -43,7 +43,7 @@ const Signup = () => {
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
+          <h4 className="card-header bg-dark text-light p-2">Edit Profile</h4>
           <div className="card-body">
             {data ? (
               <p>
@@ -54,37 +54,28 @@ const Signup = () => {
               <form onSubmit={handleFormSubmit}>
                 <input
                   className="form-input"
-                  placeholder="Your username"
-                  name="username"
+                  placeholder="Your name"
+                  name="name"
                   type="text"
                   value={formState.name}
                   onChange={handleChange}
                 />
                 <input
                   className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
+                  placeholder="Your address"
+                  name="address"
+                  type="address"
+                  value={formState.address}
                   onChange={handleChange}
                 />
                 <input
                   className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
+                  placeholder="Contact Number"
+                  name="phone"
+                  type="text"
+                  value={formState.phone}
                   onChange={handleChange}
                 />
-
-                <select
-                  className="form-input"
-                  name="role"
-                  onChange={handleChange}
-                >
-                  <option>Estate Agent</option>
-                  <option>Buyer</option>
-                </select>
 
                 <button
                   className="btn btn-block btn-primary"
@@ -108,4 +99,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default ProfileEdit;
