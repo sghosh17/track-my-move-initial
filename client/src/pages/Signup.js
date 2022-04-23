@@ -11,7 +11,8 @@ const Signup = () => {
     username: "",
     email: "",
     password: "",
-    role: "",
+    role: ""
+    
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
@@ -78,6 +79,7 @@ const Signup = () => {
                 />
 
                 <select
+                  value={formState.role}
                   className="form-input"
                   name="role"
                   onChange={handleChange}
