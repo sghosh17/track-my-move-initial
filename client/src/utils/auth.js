@@ -5,7 +5,7 @@ class AuthService {
     try {
       return decode(this.getToken());
     } catch (err) {
-      return null
+      return null;
     }
   }
 
@@ -35,19 +35,17 @@ class AuthService {
     localStorage.setItem("id_token", idToken);
 
     window.location.assign("/");
-
   }
 
   signIn(idToken) {
     localStorage.setItem("id_token", idToken);
 
     window.location.assign("/editProfile");
-
   }
 
   logout() {
     localStorage.removeItem("id_token");
-    window.location.reload();
+    window.location.assign("/"); //changed this from window.location.reload() to redirecting to the home page
   }
 }
 
