@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import UserProfile from "../components/UserProfile";
+// import UserProfile from "../components/UserProfile";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import "../profile.css";
 

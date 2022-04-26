@@ -22,6 +22,15 @@ const Header = () => {
         <div>
           {Auth.loggedIn() ? (
             <>
+              {Auth.getProfile()?.data?.role === "Buyer" ? (
+              <Link className="btn btn-lg btn-info m-2" to="/">
+                Roadmap
+              </Link>
+              ) : (
+              <Link className="btn btn-lg btn-info m-2" to="/">
+                Dashboard
+              </Link>
+              )}
               <Link className="btn btn-lg btn-info m-2" to="/me">
                 {Auth.getProfile().data.username}'s profile
               </Link>

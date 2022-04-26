@@ -17,6 +17,7 @@ import ProfileEdit from "./pages/ProfileEdit";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Auth from "./utils/auth";
+import AuthLock from "./components/AuthLock/index";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -43,8 +44,8 @@ const client = new ApolloClient({
 });
 
 function App() {
-  console.log(localStorage.getItem("id_token"))
-  console.log(Auth.getProfile())
+  console.log(localStorage.getItem("id_token"));
+  console.log(Auth.getProfile());
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -52,24 +53,24 @@ function App() {
           <Header />
           <div className="container">
             <Routes>
-              {/* bring role from signup, render correct homepage depending on role */}
-
-              <Route
-                path="/"
-                element={
-                  Auth.getProfile()?.data?.role === "Buyer" ? (
-                    <BuyerHome />
-                  ) : (
-                    <EstateHome />
-                  )
-                }
-              />
-             
+              <Route path="/" element={<AuthLock />}>
+                <Route
+                  path="/"
+                  element={
+                    Auth.getProfile()?.data?.role === "Buyer" ? (
+                      <BuyerHome />
+                    ) : (
+                      <EstateHome />
+                    )
+                  }
+                />
+                <Route path="/me" element={<Profile />} />
+                <Route path="/profiles/:username" element={<Profile />} />
+                <Route path="/editProfile" element={<ProfileEdit />} />
+              </Route>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/me" element={<Profile />} />
-              <Route path="/profiles/:username" element={<Profile />} />
-              <Route path="/editProfile" element={<ProfileEdit />} />
+              <Route path="*" element={<div>404 - Page does not exist</div>} />
             </Routes>
           </div>
           <Footer />
