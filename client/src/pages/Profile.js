@@ -1,8 +1,9 @@
 import React from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-
+import UserProfile from "../components/UserProfile";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
+import "../profile.css";
 
 import Auth from "../utils/auth";
 
@@ -28,19 +29,42 @@ const Profile = () => {
     return (
       <h4>
         You need to be logged in to see this. Use the navigation links above to
-        sign up or log iniuhbybgytggv!
+        sign up or log!
       </h4>
     );
   }
 
   return (
-    <div>
-      <div className="flex-row justify-center mb-3">
-        <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {userParam ? `${user.username}'s` : "your"} profile.
-        </h2>
+    <main className="flex-row justify-center mb-4">
+      <div className="col-12 col-lg-10">
+        <div className="card">
+          <h4 className="card-header bg-dark text-light p-2">
+            Viewing {userParam ? `${user.username}'s` : "your"} profile
+          </h4>
+          <div className="card-body overflow-hidden">
+            <div className="col-md-5 float-left">Placeholder Image</div>
+            <div className="col-md-7 float-left">
+              <p>Username : {user.username}</p>
+              <p>Name : {user.name}</p>
+              <p>Address : {user.address}</p>
+              <p>Email : {user.email}</p>
+              <p>Contact Number : {user.phone}</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      <div>
+        {Auth.loggedIn() ? (
+          <>
+            <Link className="btn btn-lg btn-info m-2" to="/editProfile">
+              Edit Profile
+            </Link>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+    </main>
   );
 };
 

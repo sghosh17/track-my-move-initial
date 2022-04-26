@@ -11,8 +11,7 @@ const Signup = () => {
     username: "",
     email: "",
     password: "",
-    role: ""
-    
+    role: "",
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
@@ -29,12 +28,18 @@ const Signup = () => {
     event.preventDefault();
     console.log(formState);
 
+    //console.log(Auth.getProfile());
+
     try {
       const { data } = await addUser({
         variables: { ...formState },
       });
 
-      Auth.signIn(data.addUser.token); //Redirect to Buyer Profile form
+      //console.log(Auth.getProfile()?.data?.role);
+
+      formState.role === "Buyer"
+        ? Auth.signIn(data.addUser.token) //Redirect to Buyer Profile form
+        : Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
@@ -84,6 +89,7 @@ const Signup = () => {
                   name="role"
                   onChange={handleChange}
                 >
+                  <option>--Select--</option>
                   <option>Estate Agent</option>
                   <option>Buyer</option>
                 </select>
