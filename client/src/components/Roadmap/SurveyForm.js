@@ -59,7 +59,7 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
             PageMaker including versions of Lorem Ipsum.
           </p>
         </div>
-        <div>
+        <div className="checkbox">
           <input
             className="item"
             name="surveyTypeDecided"
@@ -89,19 +89,7 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
           />
           <span>Queries Resolved</span>
         </div>
-        <div>
-          <label>Leave a note:</label> <br />
-          <textarea
-            value={state.note || ""}
-            name="note"
-            className="note"
-            onChange={handleChange}
-          ></textarea>
-        </div>
-        <br />
-        <button type="button" className="button1 btn-save" onClick={handleSave}>
-          Save
-        </button>
+
         <div>
           <button
             onClick={() => setStep(4)}
@@ -118,6 +106,19 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
             Next
           </button>
         </div>
+        <div>
+          <label>Leave a note:</label> <br />
+          <textarea
+            value={state.note || ""}
+            name="note"
+            className="note"
+            onChange={handleChange}
+          ></textarea>
+        </div>
+
+        <button type="button" className="button1 btn-save" onClick={handleSave}>
+          Save
+        </button>
         <div>
           <h3>User comments:</h3>
           <ul>
