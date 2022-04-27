@@ -31,9 +31,10 @@ export default function PropertyAcceptedForm({ state, onChange, onAddNote }) {
               className="switch-button-checkbox"
               type="checkbox"
               checked={state.offerMade && state.offerAccepted}
+              onChange={(e) => {}}
             ></input>
-            <label className="switch-button-label" for="">
-              <span className="switch-button-label-span">Sheet 2</span>
+            <label className="switch-button-label">
+              <span className="switch-button-label-span">In Progress</span>
             </label>
           </div>
         </div>

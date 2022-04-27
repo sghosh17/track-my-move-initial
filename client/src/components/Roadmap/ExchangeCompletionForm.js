@@ -37,8 +37,8 @@ export default function ExchangeCompletionForm({ state, onChange, onAddNote }) {
                 state.keyCollected
               }
             ></input>
-            <label className="switch-button-label" for="">
-              <span className="switch-button-label-span">Sheet 6</span>
+            <label className="switch-button-label">
+              <span className="switch-button-label-span">In Progress</span>
             </label>
           </div>
         </div>
@@ -82,8 +82,7 @@ export default function ExchangeCompletionForm({ state, onChange, onAddNote }) {
           <br />
           <input
             className="item"
-            name="contractExchanged
-            "
+            name="contractExchanged"
             type="checkbox"
             checked={state.contractExchanged}
             onChange={handleCheckboxChange}
@@ -92,8 +91,7 @@ export default function ExchangeCompletionForm({ state, onChange, onAddNote }) {
 
           <input
             className="item"
-            name="keyCollected
-            "
+            name="keyCollected"
             type="checkbox"
             checked={state.keyCollected}
             onChange={handleCheckboxChange}

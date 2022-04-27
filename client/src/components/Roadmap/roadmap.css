@@ -27,29 +27,30 @@ h1 {
 
 .switcher {
   background-color: black;
-  width: 250px;
-  height: 55px;
+  width: 260px;
+  height: 65px;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  border-radius: 30px;
 }
 
 .switch-button {
-  background: rgba(131, 120, 120, 0.56);
   border-radius: 30px;
   overflow: hidden;
-  width: 240px;
+  width: 250px;
   text-align: center;
   font-size: 18px;
   letter-spacing: 1px;
   color: #4d7775;
   padding-right: 120px;
+  margin-bottom: 5px;
   position: relative;
 }
 .switch-button:before {
-  content: "Filled";
+  content: "Completed";
   color: #c45c74;
   position: absolute;
   top: 0;
@@ -79,7 +80,7 @@ h1 {
 }
 .switch-button-checkbox + .switch-button-label {
   position: relative;
-  padding: 15px 0;
+  padding: 16px 0;
   display: block;
   user-select: none;
   pointer-events: none;

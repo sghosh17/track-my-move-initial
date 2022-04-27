@@ -27,7 +27,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
         {/* toggle button */}
         <div className="switcher">
           <div className="switch-button">
-            {state.loanApplication && state.applyOnline ? (
+            {/* {state.loanApplication && state.applyOnline ? (
               <input
                 className="switch-button-checkbox"
                 type="checkbox"
@@ -39,13 +39,14 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
                 type="checkbox"
                 defaultChecked={state.loanApplication && state.applyOnline}
               />
-            )}
-            {/* <input
+            )} */}
+
+            <input
               className="switch-button-checkbox"
               type="checkbox"
               checked={state.loanApplication && state.applyOnline}
               onChange={(e) => {}}
-            ></input> */}
+            ></input>
             <label className="switch-button-label">
               <span className="switch-button-label-span">In Progress</span>
             </label>
