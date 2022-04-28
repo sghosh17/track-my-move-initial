@@ -60,34 +60,41 @@ export default function LegalSearchForm({ state, onChange, onAddNote }) {
           </p>
         </div>
         <div className="checkbox">
-          <input
-            className="item"
-            name="solicitorHired"
-            type="checkbox"
-            checked={state.solicitorHired}
-            onChange={handleCheckboxChange}
-          />
+          <ul>
+            <li>
+              <input
+                className="item"
+                name="solicitorHired"
+                type="checkbox"
+                checked={state.solicitorHired}
+                onChange={handleCheckboxChange}
+              />
 
-          <span>Solicitor Hired </span>
+              <span>Solicitor Hired </span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="searchesStarted"
+                type="checkbox"
+                checked={state.searchesStarted}
+                onChange={handleCheckboxChange}
+              />
+              <span>Searches Started</span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="searchesCompleted"
+                type="checkbox"
+                checked={state.searchesCompleted}
+                onChange={handleCheckboxChange}
+              />
+              <span>Searches Completed </span>
+            </li>
+          </ul>
 
-          <input
-            className="item"
-            name="searchesStarted"
-            type="checkbox"
-            checked={state.searchesStarted}
-            onChange={handleCheckboxChange}
-          />
-          <span>Searches Started</span>
-
-          <br />
-          <input
-            className="item"
-            name="searchesCompleted"
-            type="checkbox"
-            checked={state.searchesCompleted}
-            onChange={handleCheckboxChange}
-          />
-          <span>Searches Completed </span>
+    
         </div>
 
         <div>
