@@ -152,10 +152,6 @@ const Home = () => {
   return (
     <div className="Sheet">
       <div>
-        <h1>TRACK MY MOVE</h1>
-      </div>
-
-      <div>
         <Stepper
           style={{ width: "100%" }}
           activeStep={currentStep - 1}

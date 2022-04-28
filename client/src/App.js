@@ -19,6 +19,8 @@ import Footer from "./components/Footer";
 import Auth from "./utils/auth";
 import AuthLock from "./components/AuthLock/index";
 
+import StepContext from "./StepContext";
+
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -58,7 +60,9 @@ function App() {
                   path="/"
                   element={
                     Auth.getProfile()?.data?.role === "Buyer" ? (
-                      <BuyerHome />
+                      <StepContext>
+                        <BuyerHome />
+                      </StepContext>
                     ) : (
                       <EstateHome />
                     )

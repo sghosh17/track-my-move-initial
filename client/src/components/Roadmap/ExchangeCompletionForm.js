@@ -59,7 +59,7 @@ export default function ExchangeCompletionForm({ state, onChange, onAddNote }) {
             PageMaker including versions of Lorem Ipsum.
           </p>
         </div>
-        <div>
+        <div className="checkbox">
           <input
             className="item"
             name="movingDateAgreed"
@@ -98,19 +98,7 @@ export default function ExchangeCompletionForm({ state, onChange, onAddNote }) {
           />
           <span>Agree Time to Collect the Key</span>
         </div>
-        <div>
-          <label>Leave a note:</label> <br />
-          <textarea
-            value={state.note || ""}
-            name="note"
-            className="note"
-            onChange={handleChange}
-          ></textarea>
-        </div>
-        <br />
-        <button type="button" className="button1 btn-save" onClick={handleSave}>
-          Save
-        </button>
+
         <div>
           <button
             onClick={() => setStep(5)}
@@ -120,6 +108,19 @@ export default function ExchangeCompletionForm({ state, onChange, onAddNote }) {
             Back
           </button>
         </div>
+        <div>
+          <label>Leave a note:</label> <br />
+          <textarea
+            value={state.note || ""}
+            name="note"
+            className="note"
+            onChange={handleChange}
+          ></textarea>
+        </div>
+
+        <button type="button" className="button1 btn-save" onClick={handleSave}>
+          Save
+        </button>
         <div>
           <h3>User comments:</h3>
           <ul>
