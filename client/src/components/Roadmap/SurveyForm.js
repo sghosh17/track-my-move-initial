@@ -60,34 +60,41 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
           </p>
         </div>
         <div className="checkbox">
-          <input
-            className="item"
-            name="surveyTypeDecided"
-            type="checkbox"
-            checked={state.surveyTypeDecided}
-            onChange={handleCheckboxChange}
-          />
+          <ul>
+            <li>
+              <input
+                className="item"
+                name="surveyTypeDecided"
+                type="checkbox"
+                checked={state.surveyTypeDecided}
+                onChange={handleCheckboxChange}
+              />
 
-          <span>Decide on Survey Type</span>
+              <span>Decide on Survey Type</span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="surveyCompleted"
+                type="checkbox"
+                checked={state.surveyCompleted}
+                onChange={handleCheckboxChange}
+              />
+              <span>Survey Completed</span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="queriesResolved"
+                type="checkbox"
+                checked={state.queriesResolved}
+                onChange={handleCheckboxChange}
+              />
+              <span>Queries Resolved</span>
+            </li>
+          </ul>
 
-          <input
-            className="item"
-            name="surveyCompleted"
-            type="checkbox"
-            checked={state.surveyCompleted}
-            onChange={handleCheckboxChange}
-          />
-          <span>Survey Completed</span>
-
-          <br />
-          <input
-            className="item"
-            name="queriesResolved"
-            type="checkbox"
-            checked={state.queriesResolved}
-            onChange={handleCheckboxChange}
-          />
-          <span>Queries Resolved</span>
+          
         </div>
 
         <div>

@@ -60,34 +60,41 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
           </p>
         </div>
         <div className="checkbox">
-          <input
-            className="item"
-            name="loanAppoitment"
-            type="checkbox"
-            checked={state.loanAppoitment}
-            onChange={handleCheckboxChange}
-          />
+          <ul>
+            <li>
+              <input
+                className="item"
+                name="loanAppoitment"
+                type="checkbox"
+                checked={state.loanAppoitment}
+                onChange={handleCheckboxChange}
+              />
 
-          <span>Loan Appointment </span>
+              <span>Loan Appointment </span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="offerReceived"
+                type="checkbox"
+                checked={state.offerReceived}
+                onChange={handleCheckboxChange}
+              />
+              <span>Offer Received </span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="offerAccepted"
+                type="checkbox"
+                checked={state.offerAccepted}
+                onChange={handleCheckboxChange}
+              />
+              <span>Offer Accepted </span>
+            </li>
+          </ul>
 
-          <input
-            className="item"
-            name="offerReceived"
-            type="checkbox"
-            checked={state.offerReceived}
-            onChange={handleCheckboxChange}
-          />
-          <span>Offer Received </span>
-
-          <br />
-          <input
-            className="item"
-            name="offerAccepted"
-            type="checkbox"
-            checked={state.offerAccepted}
-            onChange={handleCheckboxChange}
-          />
-          <span>Offer Accepted </span>
+         
         </div>
 
         <div>

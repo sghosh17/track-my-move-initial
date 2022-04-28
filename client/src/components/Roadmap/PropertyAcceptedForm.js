@@ -56,25 +56,31 @@ export default function PropertyAcceptedForm({ state, onChange, onAddNote }) {
           </p>
         </div>
         <div className="checkbox">
-          <input
-            className="item"
-            name="offerMade"
-            type="checkbox"
-            checked={state.offerMade}
-            onChange={handleCheckboxChange}
-          />
+          <ul>
+            <li>
+              <input
+                className="item"
+                name="offerMade"
+                type="checkbox"
+                checked={state.offerMade}
+                onChange={handleCheckboxChange}
+              />
 
-          <span>Offer Made </span>
+              <span>Offer Made </span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="offerAccepted"
+                type="checkbox"
+                checked={state.offerAccepted}
+                onChange={handleCheckboxChange}
+              />
+              <span>Offer Accepted </span>
+            </li>
+          </ul>
 
-          <br />
-          <input
-            className="item"
-            name="offerAccepted"
-            type="checkbox"
-            checked={state.offerAccepted}
-            onChange={handleCheckboxChange}
-          />
-          <span>Offer Accepted </span>
+         
         </div>
         <div>
           <button

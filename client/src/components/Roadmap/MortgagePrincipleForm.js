@@ -36,7 +36,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("/upload", formData, {
+      const res = await axios.post("/uploads", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -101,25 +101,31 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
           </p>
         </div>
         <div className="checkbox">
-          <input
-            className="item"
-            name="applyOnline"
-            type="checkbox"
-            checked={state.applyOnline}
-            onChange={handleCheckboxChange}
-          />
+          <ul>
+            <li>
+              <input
+                className="item"
+                name="applyOnline"
+                type="checkbox"
+                checked={state.applyOnline}
+                onChange={handleCheckboxChange}
+              />
 
-          <span>Apply online </span>
+              <span>Apply online </span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="loanApplication"
+                type="checkbox"
+                checked={state.loanApplication}
+                onChange={handleCheckboxChange}
+              />
+              <span>Mortgage Loan Application </span>
+            </li>
+          </ul>
 
-          <br />
-          <input
-            className="item"
-            name="loanApplication"
-            type="checkbox"
-            checked={state.loanApplication}
-            onChange={handleCheckboxChange}
-          />
-          <span>Mortgage Loan Application </span>
+       
         </div>
 
         <div>
