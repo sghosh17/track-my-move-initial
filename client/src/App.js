@@ -18,7 +18,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Auth from "./utils/auth";
 import AuthLock from "./components/AuthLock/index";
-
+import Contact from "./components/Contact/index";
 import StepContext from "./StepContext";
 
 // Construct our main GraphQL API endpoint
@@ -74,6 +74,7 @@ function App() {
               </Route>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<div>404 - Page does not exist</div>} />
             </Routes>
           </div>
