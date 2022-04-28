@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { multiStepContext } from "../../StepContext";
+import axios from "axios";
 
 const SECTION = "mortgagePrincipleForm";
 
 export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
   const { setStep } = useContext(multiStepContext);
+  const [file, setFile] = useState("");
+  const [filename, setFilename] = useState("Choose File");
+  const [uploadedFile, setUploadedFile] = useState({});
 
   const handleSave = (e) => {
     onAddNote(SECTION, "noteList", state.note);
@@ -21,9 +25,36 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
     onChange(SECTION, name, checked);
   };
 
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setFilename(e.target.files[0].name);
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await axios.post("/uploads", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const { fileName, filePath } = res.data;
+      setUploadedFile({ fileName, filePath });
+    } catch (err) {
+      if (err.response.status === 5000) {
+        console.log("Problem with server");
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
+  };
+
   return (
     <div className="sheet">
-      <form>
+      <form onSubmit={onSubmit}>
         {/* toggle button */}
         <div className="switcher">
           <div className="switch-button">
@@ -70,25 +101,31 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
           </p>
         </div>
         <div className="checkbox">
-          <input
-            className="item"
-            name="applyOnline"
-            type="checkbox"
-            checked={state.applyOnline}
-            onChange={handleCheckboxChange}
-          />
+          <ul>
+            <li>
+              <input
+                className="item"
+                name="applyOnline"
+                type="checkbox"
+                checked={state.applyOnline}
+                onChange={handleCheckboxChange}
+              />
 
-          <span>Apply online </span>
+              <span>Apply online </span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="loanApplication"
+                type="checkbox"
+                checked={state.loanApplication}
+                onChange={handleCheckboxChange}
+              />
+              <span>Mortgage Loan Application </span>
+            </li>
+          </ul>
 
-          <br />
-          <input
-            className="item"
-            name="loanApplication"
-            type="checkbox"
-            checked={state.loanApplication}
-            onChange={handleCheckboxChange}
-          />
-          <span>Mortgage Loan Application </span>
+       
         </div>
 
         <div>
@@ -121,7 +158,27 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
             ))}
           </ul>
         </div>
+        <div>
+          <h4>File Upload</h4>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              id="customFile"
+              onChange={onFileChange}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              {filename}
+            </label>
+          </div>
+        </div>
+        <input type="submit" value="Upload" className="btn btn-primary mt-4" />
       </form>
+      {uploadedFile ? (
+        <div className="row mt-4">
+          <h3>{uploadedFile.fileName}</h3>
+        </div>
+      ) : null}
     </div>
   );
 }

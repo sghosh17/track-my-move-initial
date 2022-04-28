@@ -60,43 +60,49 @@ export default function ExchangeCompletionForm({ state, onChange, onAddNote }) {
           </p>
         </div>
         <div className="checkbox">
-          <input
-            className="item"
-            name="movingDateAgreed"
-            type="checkbox"
-            checked={state.movingDateAgreed}
-            onChange={handleCheckboxChange}
-          />
+          <ul>
+            <li>
+              <input
+                className="item"
+                name="movingDateAgreed"
+                type="checkbox"
+                checked={state.movingDateAgreed}
+                onChange={handleCheckboxChange}
+              />
 
-          <span>Moving Date Agreed</span>
-
-          <input
-            className="item"
-            name="contractSigned"
-            type="checkbox"
-            checked={state.contractSigned}
-            onChange={handleCheckboxChange}
-          />
-          <span>Contract Signed</span>
-
-          <br />
-          <input
-            className="item"
-            name="contractExchanged"
-            type="checkbox"
-            checked={state.contractExchanged}
-            onChange={handleCheckboxChange}
-          />
-          <span>Contract Exchanged</span>
-
-          <input
-            className="item"
-            name="keyCollected"
-            type="checkbox"
-            checked={state.keyCollected}
-            onChange={handleCheckboxChange}
-          />
-          <span>Agree Time to Collect the Key</span>
+              <span>Moving Date Agreed</span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="contractSigned"
+                type="checkbox"
+                checked={state.contractSigned}
+                onChange={handleCheckboxChange}
+              />
+              <span>Contract Signed</span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="contractExchanged"
+                type="checkbox"
+                checked={state.contractExchanged}
+                onChange={handleCheckboxChange}
+              />
+              <span>Contract Exchanged</span>
+            </li>
+            <li>
+              <input
+                className="item"
+                name="keyCollected"
+                type="checkbox"
+                checked={state.keyCollected}
+                onChange={handleCheckboxChange}
+              />
+              <span>Agree Time to Collect the Key</span>
+            </li>
+          </ul>
         </div>
 
         <div>
