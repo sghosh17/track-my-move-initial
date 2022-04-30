@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_USERS } from "../utils/queries";
 import "../profile.css";
 import "../EstateHome.css";
+import ViewBuyerCard from "../components/ViewBuyerCard";
 
 const EstateHome = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,20 +39,17 @@ const EstateHome = () => {
               if (searchTerm === "") {
                 return user;
               } else if (
-                user.name.toLowerCase().includes(searchTerm.toLowerCase()) +
-                user.address.normalize().includes(searchTerm.normalize())
-              ) {
+                user.username.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+                //  user.address.normalize().includes(searchTerm.normalize())
+                //) {
                 return user;
-              }
             })
             .map((user) => {
-              return (
-                <div className="template" key={user._id}>
-                  <h3>{user.name}</h3>
-                  <h3>{user.address}</h3>
-                  <p className="email">{user.email}</p>
-                </div>
-              );
+              console.log(user.role);
+              if (user?.role?.toLowerCase() === "buyer") {
+                return <ViewBuyerCard user={user} />;
+              }
             })}
         </div>
       </div>

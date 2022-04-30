@@ -4,7 +4,7 @@
 
 import React, { useContext, useState } from "react";
 import { multiStepContext } from "../StepContext";
-
+import { useParams } from "react-router-dom";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -21,7 +21,8 @@ import "../components/Roadmap/roadmap.css";
 const Home = () => {
   // const { loading, data } = useQuery(QUERY_THOUGHTS);
   // const thoughts = data?.thoughts || [];
-
+  const { buyerId } = useParams();
+  console.log(buyerId);
   const [state, setState] = useState({
     mortgagePrincipleForm: {
       note: "",
