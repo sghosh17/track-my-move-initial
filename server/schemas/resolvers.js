@@ -19,7 +19,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("comments");
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -78,23 +78,7 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    // addComment: async (parent, { thoughtId, commentText }, context) => {
-    //   if (context.user) {
-    //     return Thought.findOneAndUpdate(
-    //       { _id: thoughtId },
-    //       {
-    //         $addToSet: {
-    //           comments: { commentText, commentAuthor: context.user.username },
-    //         },
-    //       },
-    //       {
-    //         new: true,
-    //         runValidators: true,
-    //       }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+
     removeComment: async (parent, { commentId }, context) => {
       if (context.user) {
         const comment = await Comment.findOneAndDelete({
@@ -111,23 +95,6 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    //     removeComment: async (parent, { thoughtId, commentId }, context) => {
-    //       if (context.user) {
-    //         return Thought.findOneAndUpdate(
-    //           { _id: thoughtId },
-    //           {
-    //             $pull: {
-    //               comments: {
-    //                 _id: commentId,
-    //                 commentAuthor: context.user.username,
-    //               },
-    //             },
-    //           },
-    //           { new: true }
-    //         );
-    //       }
-    //       throw new AuthenticationError('You need to be logged in!');
-    //     },
   },
 };
 
