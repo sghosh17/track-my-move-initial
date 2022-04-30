@@ -29,12 +29,16 @@ const Home = () => {
       applyOnline: false,
       loanApplication: false,
       noteList: [],
+      fileName: "",
+      uploadedFile: {},
     },
     propertyAcceptedForm: {
       note: "",
       offerMade: false,
       offerAccepted: false,
       noteList: [],
+      fileName: "",
+      uploadedFile: {},
     },
     mortgageOfferForm: {
       note: "",

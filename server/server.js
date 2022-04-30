@@ -26,7 +26,7 @@ app.post('/uploads',(req,res) =>{
 
   const file = req.files.file;
 
-  file.mv(`${__dirname}/client/public/uploads/${file.name}`, err =>{
+  file.mv(`/Users/matthewmckenna/Desktop/Coding Bootcamp/p3/track-my-move/client/src/assets/${file.name}`, err =>{
     if(err){
       console.error(err);
       return res.status(500).send(err);
