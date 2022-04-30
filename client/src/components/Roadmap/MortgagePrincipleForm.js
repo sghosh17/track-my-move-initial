@@ -4,11 +4,11 @@ import axios from "axios";
 
 const SECTION = "mortgagePrincipleForm";
 
-export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
+export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
   const { setStep } = useContext(multiStepContext);
   const [file, setFile] = useState("");
-  const [filename, setFilename] = useState("Choose File");
-  const [uploadedFile, setUploadedFile] = useState({});
+  const [filename, setFilename] = useState("");
+  // const [uploadedFile, setUploadedFile] = useState({});
 
   const handleSave = (e) => {
     onAddNote(SECTION, "noteList", state.note);
@@ -30,7 +30,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
     setFilename(e.target.files[0].name);
   };
 
-  const onSubmit = async (e) => {
+  const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
@@ -42,7 +42,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
         },
       });
       const { fileName, filePath } = res.data;
-      setUploadedFile({ fileName, filePath });
+      onChange(SECTION, "uploadedFile",{ fileName, filePath });
     } catch (err) {
       if (err.response.status === 5000) {
         console.log("Problem with server");
@@ -54,7 +54,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
 
   return (
     <div className="sheet">
-      <form onSubmit={onSubmit}>
+      <form>
         {/* toggle button */}
         <div className="switcher">
           <div className="switch-button">
@@ -172,11 +172,17 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
             </label>
           </div>
         </div>
-        <input type="submit" value="Upload" className="btn btn-primary mt-4" />
+        <input onClick={handleUpload} value="Upload" className="btn btn-primary mt-4" />
       </form>
-      {uploadedFile ? (
+      {state.uploadedFile ? (
         <div className="row mt-4">
-          <h3>{uploadedFile.fileName}</h3>
+         <a href="`/client/src/assets/${file.name}`" target="_blank">
+         <h5
+           name="file"
+          >
+           {state.uploadedFile?.fileName}</h5>
+         </a>
+         
         </div>
       ) : null}
     </div>
