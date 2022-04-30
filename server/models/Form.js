@@ -1,33 +1,20 @@
 const { Schema, model } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
-const commentSchema = new Schema({
-  commentText: {
+const formSchema = new Schema({
+  formName: {
     type: String,
     required: true,
-    minlength: 1,
-    maxlength: 280,
-    trim: true,
   },
-  commentAuthor: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
-  },
-  comments: [
+  notes: [
     {
-      commentText: {
+      noteText: {
         type: String,
         required: true,
         minlength: 1,
         maxlength: 280,
       },
-      commentAuthor: {
+      noteAuthor: {
         type: String,
         required: true,
       },
@@ -38,8 +25,24 @@ const commentSchema = new Schema({
       },
     },
   ],
+  checkboxes: [
+    {
+      checkboxName: {
+        type: String,
+        required: true,
+      },
+      status: {
+        type: Boolean,
+        required: true,
+      },
+    },
+  ],
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
-const Comment = model("Comment", commentSchema);
+const Form = model("Form", formSchema);
 
-module.exports = Comment;
+module.exports = Form;

@@ -10,30 +10,54 @@ const typeDefs = gql`
     name: String
     address: String
     phone: String
-    comments: [Comment]!
+    forms: [Form]
   }
 
-  type Comment {
+  type Form {
     _id: ID
-    commentText: String
-    commentAuthor: String
+    formName: String
+    notes: [Note]
+    checkboxes: [Checkbox]
+  }
+
+  type Checkbox {
+    checkboxName: String
+    status: Boolean
+  }
+
+  type Note {
+    noteText: String
+    noteAuthor: String
     createdAt: String
-    comments: [Comment]!
   }
 
   type Auth {
     token: ID!
     user: User
   }
-
   type Query {
     users: [User]
     user(username: String!): User
-    comments(username: String): [Comment]
-    comment(commentId: ID!): Comment
-    me: User
-  }
+    userById(userId: ID!): User
 
+    me: User
+    forms(userId: ID!): Form
+    form(userId: ID!, formName: String!): Form
+  }
+  input InputCheckbox {
+    checkboxName: String
+    status: Boolean
+  }
+  input InputNote {
+    noteText: String
+    noteAuthor: String
+    createdAt: String
+  }
+  input InputForm {
+    formName: String
+    notes: [InputNote]
+    checkboxes: [InputCheckbox]
+  }
   type Mutation {
     addUser(
       username: String!
@@ -43,8 +67,8 @@ const typeDefs = gql`
     ): Auth
     editUser(name: String!, address: String!, phone: String!): User
     login(email: String!, password: String!): Auth
-    addComment(commentText: String!): Comment
-    removeComment(commentId: ID!): Comment
+
+    addForm(userId: ID, form: InputForm): Form
   }
 `;
 
