@@ -1,7 +1,6 @@
 import React from "react";
 import { Navigate, useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-// import UserProfile from "../components/UserProfile";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import "../profile.css";
 
@@ -16,10 +15,7 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
-  // navigate to personal profile page if username is yours [Not Required Now]
-  // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-  //   return <Navigate to="/me" />;
-  // }
+  console.log("UserProfile JS - " + JSON.stringify(user));
 
   if (loading) {
     return <div>Loading...</div>;
@@ -54,7 +50,7 @@ const Profile = () => {
         </div>
       </div>
       <div>
-        {Auth.loggedIn() ? (
+        {Auth.getProfile()?.data?.role === "Buyer" ? ( //If a buyer loggedIn then only Edit button will show up
           <>
             <Link className="btn btn-lg btn-info m-2" to="/editProfile">
               Edit Profile
