@@ -71,6 +71,14 @@ function App() {
                 <Route path="/me" element={<Profile />} />
                 <Route path="/profiles/:username" element={<Profile />} />
                 <Route path="/editProfile" element={<ProfileEdit />} />
+                <Route
+                  path="/roadmap/:buyerId"
+                  element={
+                    <StepContext>
+                      <BuyerHome />
+                    </StepContext>
+                  }
+                />
               </Route>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

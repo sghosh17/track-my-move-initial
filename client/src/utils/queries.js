@@ -17,8 +17,9 @@ export const QUERY_USERS = gql`
   query getUsers {
     users {
       _id
+      role
       email
-      name
+      username
       address
     }
   }
