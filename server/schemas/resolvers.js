@@ -1,27 +1,33 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Comment } = require("../models");
+const { User, Form } = require("../models");
 const { signToken } = require("../utils/auth");
-
+const mongoose = require("mongoose");
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate("comments");
+      return User.find();
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate("comments");
+      return User.findOne({ username });
     },
-    comments: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Comment.find(params).sort({ createdAt: -1 });
+
+    userById: async (parent, { userId }) => {
+      return User.findById(userId);
     },
-    comment: async (parent, { commentId }) => {
-      return Comment.findOne({ _id: commentId });
-    },
+
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("comments");
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError("You need to be logged in!");
+    },
+
+    // query form
+    forms: async (parent, { userId }) => {
+      return Form.find({ user: userId });
+    },
+    form: async (parent, { userId, formName }) => {
+      return Form.findOne({ user: userId, formName });
     },
   },
 
@@ -50,23 +56,6 @@ const resolvers = {
       return { token, user };
     },
 
-    addComment: async (parent, { commentText }, context) => {
-      if (context.user) {
-        const comment = await Comment.create({
-          commentText,
-          commentAuthor: context.user.username,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { comments: comment._id } }
-        );
-
-        return comment;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-
     editUser: async (parent, { name, address, phone }, context) => {
       if (context.user) {
         const user = await User.findOneAndUpdate(
@@ -78,56 +67,21 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    // addComment: async (parent, { thoughtId, commentText }, context) => {
-    //   if (context.user) {
-    //     return Thought.findOneAndUpdate(
-    //       { _id: thoughtId },
-    //       {
-    //         $addToSet: {
-    //           comments: { commentText, commentAuthor: context.user.username },
-    //         },
-    //       },
-    //       {
-    //         new: true,
-    //         runValidators: true,
-    //       }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    removeComment: async (parent, { commentId }, context) => {
-      if (context.user) {
-        const comment = await Comment.findOneAndDelete({
-          _id: commentId,
-          commentAuthor: context.user.username,
-        });
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { comments: comment._id } }
-        );
-
-        return comment;
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    addForm: async (parent, { userId, form }) => {
+      form.user = mongoose.Types.ObjectId(userId);
+      const result = await Form.create(form);
+      return result;
     },
-    //     removeComment: async (parent, { thoughtId, commentId }, context) => {
-    //       if (context.user) {
-    //         return Thought.findOneAndUpdate(
-    //           { _id: thoughtId },
-    //           {
-    //             $pull: {
-    //               comments: {
-    //                 _id: commentId,
-    //                 commentAuthor: context.user.username,
-    //               },
-    //             },
-    //           },
-    //           { new: true }
-    //         );
-    //       }
-    //       throw new AuthenticationError('You need to be logged in!');
-    //     },
+
+    // addForm: async (parent, { userId, form }, context) => {
+    //   if (context.user && context.user._id === userId) {
+    //     form.user = mongoose.Types.ObjectId(userId);
+    //     const result = await Form.create(form);
+    //     return result;
+    //   }
+    //   throw new AuthenticationError("You need to be logged in!");
+    // },
   },
 };
 
