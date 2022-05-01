@@ -1,9 +1,9 @@
 import React, { useState, Component } from "react";
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { QUERY_ME } from "../utils/queries";
 import { EDIT_USER } from "../utils/mutations";
-
-//import Auth from "../utils/auth";
+import { useEffect } from "react";
 
 const ProfileEdit = () => {
   const [formState, setFormState] = useState({
@@ -11,6 +11,24 @@ const ProfileEdit = () => {
     address: "",
     phone: "",
   });
+
+  /* Section to fetch Me data and set in formState */
+  const { loading, data: userData } = useQuery(QUERY_ME);
+  const userProfile = userData?.me || {};
+  console.log("userData - " + JSON.stringify(userData));
+  console.log("UserProfile - " + JSON.stringify(userProfile));
+  useEffect(() => {
+    if (userProfile) {
+      setFormState({
+        name: userProfile?.name,
+        address: userProfile?.address,
+        phone: userProfile?.phone,
+      });
+    }
+  }, [userProfile?.name]);
+
+  /* This is where I want to change the value of FormState*/
+
   const [editUser, { error, data }] = useMutation(EDIT_USER);
 
   const handleChange = (event) => {
@@ -32,8 +50,6 @@ const ProfileEdit = () => {
       });
 
       window.location.assign("/me");
-
-      // Auth.login(data.addUser.token);
     } catch (e) {
       console.log(e.networkError.result.errors);
     }
@@ -57,7 +73,7 @@ const ProfileEdit = () => {
                   placeholder="Your name"
                   name="name"
                   type="text"
-                  value={formState.name}
+                  defaultValue={formState.name}
                   onChange={handleChange}
                 />
                 <input
