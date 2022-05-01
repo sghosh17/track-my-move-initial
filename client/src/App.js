@@ -71,6 +71,7 @@ function App() {
                 <Route path="/me" element={<Profile />} />
                 <Route path="/profiles/:username" element={<Profile />} />
                 <Route path="/editProfile" element={<ProfileEdit />} />
+                <Route path="/client/src/assets/:file.name" />
                 <Route
                   path="/roadmap/:buyerId"
                   element={

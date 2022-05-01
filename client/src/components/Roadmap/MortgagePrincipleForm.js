@@ -89,15 +89,12 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
         <h2>Mortgage in Principle</h2>
         <div className="description">
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
+            To get a mortgage in principle you need to apply online. First use a comparison website to find a good rate or speak
+            to a mortgage advisor who can help you find one. Once you have chosen your lender and product you need to apply online
+            with your income and expenditure information. You will also be asked to provide the details of the mortgage amount you
+            are looking for and your deposit amount. After submitting you are usually given an answer within a couple of minutes.
+            If accepted you have a mortgage in principle offer. When you apply for your actual mortgage you need to keep the details
+            of your principle offer. It's also handy to let the estate agent know you have this.
           </p>
         </div>
         <div className="checkbox">
@@ -176,7 +173,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
       </form>
       {state.uploadedFile ? (
         <div className="row mt-4">
-         <a href="`/client/src/assets/${file.name}`" target="_blank">
+         <a href="'/client/src/assets/${file.name}`" target="_blank">
          <h5
            name="file"
           >
