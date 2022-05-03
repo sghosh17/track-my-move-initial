@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import "../profile.css";
@@ -38,7 +38,13 @@ const Profile = () => {
             Viewing {userParam ? `${user.username}'s` : "your"} profile
           </h4>
           <div className="card-body overflow-hidden">
-            <div className="col-md-5 float-left">Placeholder Image</div>
+            <div className="col-md-5 float-left">
+              <img
+                src={`/images/${user.image}`}
+                alt={user.name}
+                className="profileImage"
+              />
+            </div>
             <div className="col-md-7 float-left">
               <p>Username : {user.username}</p>
               <p>Name : {user.name}</p>

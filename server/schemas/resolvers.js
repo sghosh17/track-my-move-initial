@@ -2,8 +2,19 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Form } = require("../models");
 const { signToken } = require("../utils/auth");
 const mongoose = require("mongoose");
+const path = require("path");
+const { graphqlUploadExpress, GraphQLUpload } = require("graphql-upload");
+const { createWriteStream, existsSync, mkdirSync } = require("fs");
+const files = [];
+
 const resolvers = {
+  Upload: GraphQLUpload,
+
   Query: {
+    files: async () => {
+      files;
+    },
+
     users: async () => {
       return User.find();
     },
@@ -56,16 +67,35 @@ const resolvers = {
       return { token, user };
     },
 
-    editUser: async (parent, { name, address, phone }, context) => {
+    editUser: async (parent, { name, address, phone, image }, context) => {
       if (context.user) {
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $set: { name: name, address: address, phone: phone } }
+          { $set: { name: name, address: address, phone: phone, image: image } }
         );
 
         return user;
       }
       throw new AuthenticationError("You need to be logged in!");
+    },
+
+    uploadFile: async (_, { file }) => {
+      const { createReadStream, filename } = await file;
+
+      await new Promise((res) =>
+        createReadStream()
+          .pipe(
+            createWriteStream(
+              path.join(__dirname, "../../client/images", filename)
+            )
+          )
+          .on("error", (fooErr) => console.error(fooErr.message))
+          .on("close", res)
+      );
+
+      files.push(filename);
+
+      return filename;
     },
 
     addForm: async (parent, { userId, form }) => {

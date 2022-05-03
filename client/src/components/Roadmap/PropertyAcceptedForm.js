@@ -75,15 +75,15 @@ export default function PropertyAcceptedForm({ state, onChange, onAddNote }) {
         <h2>Property offer Accepted</h2>
         <div className="description">
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
+            After getting your mortgage in principle offer and with a good idea of what you can afford you can now start
+            to book viewings at properties you like. According to an article by What Mortgage from February 2017, the majority 
+            of home buyers view six or more properties before they make the decision to commit to buying one. A lot of properties 
+            which are expecting multiple bidders have a minimum price known as 'Offers over'. If there are multiple bidders then
+            the seller can do a 'best and final'. This means you have to submit to the estate agent your final offer and the seller 
+            will choose the bid they prefer. 
+            Properties can also be listed for an exact amount, in this case its usually a good idea to start the negotiation
+            at a lower price. Negotiation is an art and you should research this before making any bids.
+          
           </p>
         </div>
         <div className="checkbox">

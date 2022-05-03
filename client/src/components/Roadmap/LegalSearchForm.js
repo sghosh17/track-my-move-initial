@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { multiStepContext } from "../../StepContext";
+import axios from "axios";
 
 const SECTION = "legalSearchForm";
 
 export default function LegalSearchForm({ state, onChange, onAddNote }) {
   const { setStep } = useContext(multiStepContext);
+  const [file, setFile] = useState("");
+  const [filename, setFilename] = useState("");
 
   const handleSave = (e) => {
     onAddNote(SECTION, "noteList", state.note);
@@ -19,6 +22,33 @@ export default function LegalSearchForm({ state, onChange, onAddNote }) {
   const handleCheckboxChange = (e) => {
     const { checked, name } = e.target;
     onChange(SECTION, name, checked);
+  };
+
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setFilename(e.target.files[0].name);
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await axios.post("/uploads", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const { fileName, filePath } = res.data;
+      onChange(SECTION, "uploadedFile",{ fileName, filePath });
+    } catch (err) {
+      if (err.response.status === 5000) {
+        console.log("Problem with server");
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
   };
 
   return (
@@ -48,15 +78,37 @@ export default function LegalSearchForm({ state, onChange, onAddNote }) {
         <h2>Legal Searches</h2>
         <div className="description">
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
+    Now you have your mortgage confirmed you need to hire a conveyancing Solicitor.
+    A solicitor or conveyancer will handle all the legal aspects of buying or selling a 
+    property for you. A good one will keep you updated regularly, and can support 
+    you by answering questions about the process of buying a property. Depending on the property 
+    type what they do can vary but the the most common role is under-taking the searches required
+    when purchasing a property. They include:
+    <ul>
+      <li>
+      Local authority searches
+
+      </li>
+
+      <li>
+      Land Registry searches.
+      </li>
+      <li>
+      Environmental searches. 
+      </li>
+      <li>
+      Water authority searches.
+      </li>
+      <li>
+      Location specific searches.
+      </li>
+      <li>
+      Chancel repair search.
+      </li>
+
+    </ul>
+          Your lender may have some conveyancers that they recommend to use but its always a good idea to look around
+           to see what is available. Speak to friends and family who may have some recommendations.
           </p>
         </div>
         <div className="checkbox">
@@ -134,7 +186,34 @@ export default function LegalSearchForm({ state, onChange, onAddNote }) {
             ))}
           </ul>
         </div>
+
+        <div>
+          <h4>File Upload</h4>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              id="customFile"
+              onChange={onFileChange}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              {filename}
+            </label>
+          </div>
+        </div>
+        <input onClick={handleUpload} value="Upload" className="btn btn-primary mt-4" />
       </form>
+      {state.uploadedFile ? (
+        <div className="row mt-4">
+         <a href="`/client/src/assets/${file.name}`" target="_blank">
+         <h5
+           name="file"
+          >
+           {state.uploadedFile?.fileName}</h5>
+         </a>
+         
+        </div>
+      ) : null}
     </div>
   );
 }

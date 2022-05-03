@@ -35,12 +35,10 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  // forms: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "Form",
-  //   },
-  // ],
+  image: {
+    type: String,
+    required: false,
+  },
 });
 
 userSchema.pre("save", async function (next) {

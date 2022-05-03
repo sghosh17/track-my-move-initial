@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { multiStepContext } from "../../StepContext";
+import axios from "axios";
 
 const SECTION = "mortgageOfferForm";
 
 export default function MortgageOfferForm({ state, onChange, onAddNote }) {
   const { setStep } = useContext(multiStepContext);
+  const [file, setFile] = useState("");
+  const [filename, setFilename] = useState("");
 
   const handleSave = (e) => {
     onAddNote(SECTION, "noteList", state.note);
@@ -19,6 +22,33 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
   const handleCheckboxChange = (e) => {
     const { checked, name } = e.target;
     onChange(SECTION, name, checked);
+  };
+
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setFilename(e.target.files[0].name);
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await axios.post("/uploads", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const { fileName, filePath } = res.data;
+      onChange(SECTION, "uploadedFile",{ fileName, filePath });
+    } catch (err) {
+      if (err.response.status === 5000) {
+        console.log("Problem with server");
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
   };
 
   return (
@@ -48,15 +78,11 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
         <h2>Mortgage Offer</h2>
         <div className="description">
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
+         Once you have had an offer accepted on a property you can finalise your mortgage. Return to either your
+         online account with the lender or contact your mortgage broker and complete the application for the 
+         actual mortgage. Be prepared to provide payslips and proof of addresses. If you have been on any kind
+         of leave from employment (e.g. maternity leave) you should be able to provide payslips from before
+         this leave. The actual mortgage application can take anywhere between 2 and 6 weeks depending on circumstances.
           </p>
         </div>
         <div className="checkbox">
@@ -134,7 +160,33 @@ export default function MortgageOfferForm({ state, onChange, onAddNote }) {
             ))}
           </ul>
         </div>
+        <div>
+          <h4>File Upload</h4>
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              id="customFile"
+              onChange={onFileChange}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              {filename}
+            </label>
+          </div>
+        </div>
+        <input onClick={handleUpload} value="Upload" className="btn btn-primary mt-4" />
       </form>
+      {state.uploadedFile ? (
+        <div className="row mt-4">
+         <a href="`/client/src/assets/${file.name}`" target="_blank">
+         <h5
+           name="file"
+          >
+           {state.uploadedFile?.fileName}</h5>
+         </a>
+         
+        </div>
+      ) : null}
     </div>
   );
 }
