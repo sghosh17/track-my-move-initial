@@ -65,3 +65,59 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_FORMS = gql`
+query Forms($userId: ID!) {
+  forms(userId: $userId) {
+    _id
+    user {
+      username
+      email
+  
+      role
+      _id
+      name
+      address
+      phone
+    }
+    formName
+    notes {
+      noteText
+      noteAuthor
+      createdAt
+    }
+    checkboxes {
+      checkboxName
+      status
+    }
+  }
+}
+`;
+
+export const QUERY_FORM = gql`
+query form($userId: ID!, $formName: String!) {
+  form(userId: $userId, formName: $formName) {
+    _id
+    user {
+      username
+      email
+  
+      role
+      _id
+      name
+      address
+      phone
+    }
+    formName
+    notes {
+      noteText
+      noteAuthor
+      createdAt
+    }
+    checkboxes {
+      checkboxName
+      status
+    }
+  }
+}
+`;
