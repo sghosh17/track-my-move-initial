@@ -1,6 +1,11 @@
 import React, { useContext, useState } from "react";
 import { multiStepContext } from "../../StepContext";
 import axios from "axios";
+import { useMutation } from "@apollo/client";
+import { ADD_FORM } from "../../utils/mutations";
+import { QUERY_FORMS, QUERY_ME } from "../../utils/queries";
+import Auth from "../../utils/auth";
+
 
 const SECTION = "mortgagePrincipleForm";
 
@@ -8,7 +13,30 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
   const { setStep } = useContext(multiStepContext);
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("");
+  const {data: userData} = Auth.getProfile();
   // const [uploadedFile, setUploadedFile] = useState({});
+  const [addForm, { error }] = useMutation(ADD_FORM, {
+    update(cache, { data: { addForm } }) {
+      try {
+
+        const { forms } = cache.readQuery({ query: QUERY_FORMS });
+        console.log(addForm)
+        cache.writeQuery({
+          query: QUERY_FORMS,
+          data: { forms: [addForm, ...forms] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+
+      // update me object's cache
+      // const { me } = cache.readQuery({ query: QUERY_ME });
+      // cache.writeQuery({
+      //   query: QUERY_ME,
+      //   data: { me: { ...me, forms: [...me.forms, addForm] } },
+      // });
+    },
+  });
 
   const handleSave = (e) => {
     onAddNote(SECTION, "noteList", state.note);
@@ -19,6 +47,31 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
     const { value, name } = e.target;
     onChange(SECTION, name, value);
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const notes = state.noteList.map((noteText)=>{return {noteText, noteAuthor: userData.username};})//[{noteText: state.note, noteAuthor: userData.username}],
+     console.log(notes)
+     console.log(userData)
+      const { data } = await addForm({
+        variables: {
+
+          userId: userData._id,
+          form: {
+            formName: SECTION,
+            checkboxes: [{checkboxName: "applyOnline", status: state.applyOnline},{checkboxName: "loanApplication", status: state.loanApplication} ],
+            notes: notes
+          }
+          
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
 
   const handleCheckboxChange = (e) => {
     const { checked, name } = e.target;
@@ -54,7 +107,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
 
   return (
     <div className="sheet">
-      <form>
+      <form onSubmit={handleSubmit}>
         {/* toggle button */}
         <div className="switcher">
           <div className="switch-button">
@@ -170,6 +223,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
           </div>
         </div>
         <input onClick={handleUpload} value="Upload" className="btn btn-primary mt-4" />
+        <input type='submit' value="Save Page" className="btn btn-primary mt-4" />
       </form>
       {state.uploadedFile ? (
         <div className="row mt-4">

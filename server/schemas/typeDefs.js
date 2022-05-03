@@ -1,5 +1,6 @@
 const { gql } = require("apollo-server-express");
 
+
 const typeDefs = gql`
   type User {
     _id: ID
@@ -10,11 +11,22 @@ const typeDefs = gql`
     name: String
     address: String
     phone: String
-    forms: [Form]
+  
+  }
+
+  type UserForm {
+    _id: ID
+    username: String
+    email: String
+    role: String
+    name: String
+    address: String
+    phone: String
   }
 
   type Form {
     _id: ID
+    user: UserForm
     formName: String
     notes: [Note]
     checkboxes: [Checkbox]
@@ -31,6 +43,8 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  
+
   type Auth {
     token: ID!
     user: User
@@ -41,7 +55,7 @@ const typeDefs = gql`
     userById(userId: ID!): User
 
     me: User
-    forms(userId: ID!): Form
+    forms(userId: ID!): [Form]
     form(userId: ID!, formName: String!): Form
   }
   input InputCheckbox {
