@@ -17,8 +17,19 @@ const typeDefs = gql`
     forms: [Form]
   }
 
+  type UserForm {
+    _id: ID
+    username: String
+    email: String
+    role: String
+    name: String
+    address: String
+    phone: String
+  }
+
   type Form {
     _id: ID
+    user: UserForm
     formName: String
     notes: [Note]
     checkboxes: [Checkbox]
@@ -46,7 +57,7 @@ const typeDefs = gql`
     userById(userId: ID!): User
 
     me: User
-    forms(userId: ID!): Form
+    forms(userId: ID!): [Form]
     form(userId: ID!, formName: String!): Form
 
     files: [String]

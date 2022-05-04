@@ -35,10 +35,11 @@ const resolvers = {
 
     // query form
     forms: async (parent, { userId }) => {
-      return Form.find({ user: userId });
+     
+      return Form.find({ user: userId }).populate("user");
     },
     form: async (parent, { userId, formName }) => {
-      return Form.findOne({ user: userId, formName });
+      return Form.findOne({ user: userId, formName }).populate("user");
     },
   },
 
