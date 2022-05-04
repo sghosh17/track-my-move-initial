@@ -1,5 +1,5 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -13,12 +13,10 @@ const Footer = () => {
             &larr; Go Back
           </button>
         )}
-     
-          <Link className="btn btn-lg btn-info m-2" to="/contact">
-            Contact Us
-          </Link>
-       
-        
+
+        <Link className="btn btn-lg btn-info m-2" to="/contact">
+          Contact Us
+        </Link>
       </div>
     </footer>
   );
