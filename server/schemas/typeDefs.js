@@ -1,7 +1,9 @@
 const { gql } = require("apollo-server-express");
-
+const { graphqlUploadExpress, GraphQLUpload } = require("graphql-upload");
 
 const typeDefs = gql`
+  scalar Upload
+
   type User {
     _id: ID
     username: String
@@ -11,7 +13,8 @@ const typeDefs = gql`
     name: String
     address: String
     phone: String
-  
+    image: String
+    forms: [Form]
   }
 
   type UserForm {
@@ -43,12 +46,11 @@ const typeDefs = gql`
     createdAt: String
   }
 
-  
-
   type Auth {
     token: ID!
     user: User
   }
+
   type Query {
     users: [User]
     user(username: String!): User
@@ -57,29 +59,42 @@ const typeDefs = gql`
     me: User
     forms(userId: ID!): [Form]
     form(userId: ID!, formName: String!): Form
+
+    files: [String]
   }
+
   input InputCheckbox {
     checkboxName: String
     status: Boolean
   }
+
   input InputNote {
     noteText: String
     noteAuthor: String
     createdAt: String
   }
+
   input InputForm {
     formName: String
     notes: [InputNote]
     checkboxes: [InputCheckbox]
   }
+
   type Mutation {
+    uploadFile(file: Upload!): String
+
     addUser(
       username: String!
       email: String!
       password: String!
       role: String!
     ): Auth
-    editUser(name: String!, address: String!, phone: String!): User
+    editUser(
+      name: String!
+      address: String!
+      phone: String!
+      image: String!
+    ): User
     login(email: String!, password: String!): Auth
 
     addForm(userId: ID, form: InputForm): Form

@@ -1,6 +1,5 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 
@@ -28,14 +27,10 @@ const Signup = () => {
     event.preventDefault();
     console.log(formState);
 
-    //console.log(Auth.getProfile());
-
     try {
       const { data } = await addUser({
         variables: { ...formState },
       });
-
-      //console.log(Auth.getProfile()?.data?.role);
 
       formState.role === "Buyer"
         ? Auth.signIn(data.addUser.token) //Redirect to Buyer Profile form

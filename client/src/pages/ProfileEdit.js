@@ -1,28 +1,30 @@
-import React, { useState, Component } from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
-import { EDIT_USER } from "../utils/mutations";
+import { EDIT_USER, uploadFileMutation } from "../utils/mutations";
 import { useEffect } from "react";
+import { useDropzone } from "react-dropzone";
 
 const ProfileEdit = () => {
   const [formState, setFormState] = useState({
     name: "",
     address: "",
     phone: "",
+    image: "",
   });
 
   /* Section to fetch Me data and set in formState */
   const { loading, data: userData } = useQuery(QUERY_ME);
   const userProfile = userData?.me || {};
-  console.log("userData - " + JSON.stringify(userData));
-  console.log("UserProfile - " + JSON.stringify(userProfile));
+
   useEffect(() => {
     if (userProfile) {
       setFormState({
         name: userProfile?.name,
         address: userProfile?.address,
         phone: userProfile?.phone,
+        image: userProfile?.image,
       });
     }
   }, [userProfile?.name]);
@@ -30,6 +32,28 @@ const ProfileEdit = () => {
   /* This is where I want to change the value of FormState*/
 
   const [editUser, { error, data }] = useMutation(EDIT_USER);
+
+  const [uploadFile] = useMutation(uploadFileMutation, {});
+
+  const onDrop = useCallback(
+    ([file]) => {
+      // setFormState({
+      //   ...formState,
+      //   image: file.name,
+      // });
+      setFormState((prevState) => ({
+        ...prevState,
+        image: file.name,
+      }));
+
+      uploadFile({ variables: { file } });
+    },
+    [uploadFile, formState]
+  );
+
+  console.log("state", formState);
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -73,7 +97,7 @@ const ProfileEdit = () => {
                   placeholder="Your name"
                   name="name"
                   type="text"
-                  defaultValue={formState.name}
+                  value={formState.name}
                   onChange={handleChange}
                 />
                 <input
@@ -92,6 +116,21 @@ const ProfileEdit = () => {
                   value={formState.phone}
                   onChange={handleChange}
                 />
+
+                <img
+                  src={`/images/${formState.image}`}
+                  alt={formState.name}
+                  className="profileImage"
+                />
+
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {
+                    <p>
+                      Drag 'n' drop some files here, or click to select files
+                    </p>
+                  }
+                </div>
 
                 <button
                   className="btn btn-block btn-primary"

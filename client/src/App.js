@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -20,9 +15,10 @@ import Auth from "./utils/auth";
 import AuthLock from "./components/AuthLock/index";
 import Contact from "./components/Contact/index";
 import StepContext from "./StepContext";
+import { createUploadLink } from "apollo-upload-client";
 
 // Construct our main GraphQL API endpoint
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
   uri: "/graphql",
 });
 
@@ -42,6 +38,7 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
   link: authLink.concat(httpLink),
+  //uploadLink,
   cache: new InMemoryCache(),
 });
 
