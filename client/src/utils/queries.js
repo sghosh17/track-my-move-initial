@@ -9,6 +9,7 @@ export const QUERY_USER = gql`
       name
       address
       phone
+      image
     }
   }
 `;
@@ -21,6 +22,7 @@ export const QUERY_USERS = gql`
       email
       username
       address
+      image
     }
   }
 `;
@@ -62,6 +64,7 @@ export const QUERY_ME = gql`
       name
       address
       phone
+      image
     }
   }
 `;
