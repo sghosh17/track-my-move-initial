@@ -136,7 +136,8 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
             </label>
           </div>
         </div>
-
+<br>
+</br>
         {/* description */}
 
         <h2>Mortgage in Principle</h2>
@@ -198,7 +199,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
         </div>
 
         <button type="button" className="button1 btn-save" onClick={handleSave}>
-          Save
+          Add Note
         </button>
         <div>
           <h3>User comments:</h3>
@@ -217,12 +218,16 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote}) {
               id="customFile"
               onChange={onFileChange}
             />
-            <label className="custom-file-label" htmlFor="customFile">
+            {/* <label className="custom-file-label" htmlFor="customFile">
               {filename}
-            </label>
+            </label> */}
           </div>
         </div>
+        <br>
+        </br>
         <input onClick={handleUpload} value="Upload" className="btn btn-primary mt-4" />
+        <br>
+        </br>
         <input type='submit' value="Save Page" className="btn btn-primary mt-4" />
       </form>
       {state.uploadedFile ? (

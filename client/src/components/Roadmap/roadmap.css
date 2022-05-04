@@ -145,7 +145,7 @@ li {
   opacity: 1;
 }
 .btn-save:after {
-  content: "SAVE";
+  content: "Add Note";
   display: flex;
   justify-content: center;
   align-items: center;
