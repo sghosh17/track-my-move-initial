@@ -140,7 +140,7 @@ const ProfileEdit = () => {
                     {
                       <p>
                         <button
-                          className="btn btn-block btn-primary uploadButton"
+                          className="btn btn-block btn-info uploadButton"
                           type="button"
                         >
                           Upload

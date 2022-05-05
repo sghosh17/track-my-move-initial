@@ -923,7 +923,8 @@ a:hover {
 
 /* BACKGROUND UTILS */
 .bg-primary {
-  background-color: #2d3e50 !important;
+  /*background-color: #2d3e50 !important;*/
+  background-color: #7f2e41 !important;
 }
 
 .bg-info {
