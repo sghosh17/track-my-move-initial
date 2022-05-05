@@ -6,6 +6,16 @@
   float: left;
 }
 
+.titleDiv {
+  width: 50%;
+  text-align: center;
+}
+
+.header-logo {
+  width: 150px;
+  float: left;
+}
+
 .uploadContainer {
   display: flex;
   margin-bottom: 20px;
