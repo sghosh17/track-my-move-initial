@@ -1,0 +1,12 @@
+.footer {
+  background-color: #61a6ab;
+  text-align: center;
+}
+.btn-1 {
+  background-color: #ed5b2d;
+  color: white;
+}
+
+.btn-1:hover {
+  background-color: #f3ad97;
+}

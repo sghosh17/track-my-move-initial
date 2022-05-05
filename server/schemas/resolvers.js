@@ -35,7 +35,6 @@ const resolvers = {
 
     // query form
     forms: async (parent, { userId }) => {
-     
       return Form.find({ user: userId }).populate("user");
     },
     form: async (parent, { userId, formName }) => {
@@ -47,6 +46,102 @@ const resolvers = {
     addUser: async (parent, { username, email, role, password }) => {
       const user = await User.create({ username, email, role, password });
       const token = signToken(user);
+      await Form.insertMany([
+        {
+          formName: "mortgagePrincipleForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "applyOnline",
+              status: false,
+            },
+            {
+              checkboxName: "loanApplication",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+        {
+          formName: "mortgageOfferForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "loanAppointment",
+              status: false,
+            },
+            {
+              checkboxName: "offerReceived",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+
+        {
+          formName: "legalSearchForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "solicitorHired",
+              status: false,
+            },
+            {
+              checkboxName: "searchesStarted",
+              status: false,
+            },
+            {
+              checkboxName: "searchesCompleted",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+
+        {
+          formName: "surveyForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "surveyTypeDecided",
+              status: false,
+            },
+            {
+              checkboxName: "surveyCompleted",
+              status: false,
+            },
+            {
+              checkboxName: "queriesResolved",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+
+        {
+          formName: "exchangeCompletionForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "movingDateAgreed",
+              status: false,
+            },
+            {
+              checkboxName: "contractSigned",
+              status: false,
+            },
+            {
+              checkboxName: "contractExchanged",
+              status: false,
+            },
+            {
+              checkboxName: "keyCollected",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+      ]);
       return { token, user };
     },
 
@@ -99,10 +194,24 @@ const resolvers = {
       return filename;
     },
 
+    // it is saving many forms under the same form name - not good
     addForm: async (parent, { userId, form }) => {
       form.user = mongoose.Types.ObjectId(userId);
       const result = await Form.create(form);
       return result;
+    },
+    updateForm: async (parent, { userId, form }) => {
+      const userForms = await Form.find({ user: userId });
+
+      const formToUpdate = userForms.find((userForm) => {
+        return userForm.formName === form.formName;
+      });
+
+      formToUpdate.notes = form.notes;
+      formToUpdate.checkboxes = form.checkboxes;
+
+      await formToUpdate.save();
+      return formToUpdate;
     },
 
     // addForm: async (parent, { userId, form }, context) => {

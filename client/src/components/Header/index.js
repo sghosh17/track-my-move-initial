@@ -1,5 +1,12 @@
 import React from "react";
+
+
+import "../Header/header.css";
+
+import Logo from "../../../src/assets/logo.png";
+
 import { Link, NavLink } from "react-router-dom";
+
 
 import Auth from "../../utils/auth";
 
@@ -9,10 +16,14 @@ const Header = () => {
     Auth.logout();
   };
   return (
-    <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
+    <header className=" text-light mb-4 py-3 flex-row align-center header">
+      <img className="logo" src={Logo} alt="Logo Image" />
+
       <div className="container flex-row justify-space-between-lg justify-center align-center">
         <div>
-          <h1 className="m-0">Track My Move</h1>
+
+          <h1 className="m-0 header-title">Track My Move</h1>
+
 
           <p className="m-0">
             One stop shop for all you need when buying a property.
@@ -72,7 +83,7 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link className="btn btn-lg btn-info m-2" to="/login">
+              <Link className="btn btn-lg m-2 btn-1" to="/login">
                 Login
               </Link>
               <Link className="btn btn-lg btn-light m-2" to="/signup">
