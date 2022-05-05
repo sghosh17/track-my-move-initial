@@ -6,7 +6,44 @@
   float: left;
 }
 
-.profileImage {
-  width: 300px;
-  max-width: 300px;
+.uploadContainer {
+  display: flex;
+  margin-bottom: 20px;
 }
+
+.uploadDiv {
+  display: inline-block;
+  width: 40%;
+  margin: auto;
+}
+
+.uploadButton {
+  cursor: pointer !important;
+  width: 50% !important;
+  margin: auto;
+}
+
+.profileTitle {
+  background-color: #2d3e50 !important;
+}
+
+.profileImageDiv {
+  margin: auto;
+  display: inline-block;
+  width: 40%;
+}
+
+.profileImage {
+  width: 200px;
+  max-width: 200px;
+  margin: auto;
+}
+
+.profileFontSize {
+  font-size: 1.3rem;
+}
+
+.mt-6 {
+  margin-top: 4rem !important;
+}
+
