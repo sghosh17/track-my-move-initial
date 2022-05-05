@@ -51,7 +51,7 @@ function App() {
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
           <Header />
-          <div className="container">
+          <div className="container mt-4">
             <Routes>
               <Route path="/" element={<AuthLock />}>
                 <Route

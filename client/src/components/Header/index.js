@@ -9,8 +9,8 @@ const Header = () => {
     Auth.logout();
   };
   return (
-    <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
-      <div className="container flex-row justify-space-between-lg justify-center align-center">
+    <header className="bg-primary text-light flex-row align-center">
+      <div className="container flex-row flex-no-wrap justify-space-between-lg justify-center align-center">
         <div className="titleDiv">
           <img
             src="/logo.png"
