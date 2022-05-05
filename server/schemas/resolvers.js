@@ -35,7 +35,6 @@ const resolvers = {
 
     // query form
     forms: async (parent, { userId }) => {
-     
       return Form.find({ user: userId }).populate("user");
     },
     form: async (parent, { userId, formName }) => {
@@ -99,10 +98,24 @@ const resolvers = {
       return filename;
     },
 
+    // it is saving many forms under the same form name - not good
     addForm: async (parent, { userId, form }) => {
       form.user = mongoose.Types.ObjectId(userId);
       const result = await Form.create(form);
       return result;
+    },
+    updateForm: async (parent, { userId, form }) => {
+      const userForms = await Form.find({ user: userId });
+
+      const formToUpdate = userForms.find((userForm) => {
+        return userForm.formName === form.formName;
+      });
+
+      formToUpdate.notes = form.notes;
+      formToUpdate.checkboxes = form.checkboxes;
+
+      await formToUpdate.save();
+      return formToUpdate;
     },
 
     // addForm: async (parent, { userId, form }, context) => {

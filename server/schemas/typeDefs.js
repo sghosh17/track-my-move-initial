@@ -98,6 +98,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
 
     addForm(userId: ID, form: InputForm): Form
+
+    updateForm(userId: ID, form: InputForm): Form
   }
 `;
 
