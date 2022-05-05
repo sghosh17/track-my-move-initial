@@ -1,0 +1,23 @@
+.header {
+  background-color: #61a6ab;
+}
+.header-title {
+  color: #ed5b2d;
+}
+
+.btn-1 {
+  background-color: #ed5b2d;
+  color: white;
+}
+
+.btn-1:hover {
+  background-color: #f3ad97;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  background: white;
+  margin-left: 5px;
+  border-radius: 50%;
+}
