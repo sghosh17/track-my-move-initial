@@ -51,6 +51,21 @@ const ProfileEdit = () => {
     [uploadFile, formState]
   );
 
+  // const handleUpload = (event) => {
+  //   ([file]) => {
+  //     // setFormState({
+  //     //   ...formState,
+  //     //   image: file.name,
+  //     // });
+  //     setFormState((prevState) => ({
+  //       ...prevState,
+  //       image: file.name,
+  //     }));
+
+  //     uploadFile({ variables: { file } });
+  //   };
+  // };
+
   console.log("state", formState);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
@@ -80,10 +95,12 @@ const ProfileEdit = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <main className="flex-row justify-center mb-4 mt-6">
       <div className="col-12 col-lg-10">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Edit Profile</h4>
+          <h4 className="card-header bg-dark text-light p-2 profileTitle">
+            Edit Profile
+          </h4>
           <div className="card-body">
             {data ? (
               <p>
@@ -117,20 +134,58 @@ const ProfileEdit = () => {
                   onChange={handleChange}
                 />
 
-                <img
-                  src={`/images/${formState.image}`}
-                  alt={formState.name}
-                  className="profileImage"
-                />
+                <div className="uploadContainer">
+                  <div {...getRootProps()} className="uploadDiv">
+                    <input {...getInputProps()} />
+                    {
+                      <p>
+                        <button
+                          className="btn btn-block btn-primary uploadButton"
+                          type="button"
+                        >
+                          Upload
+                        </button>
+                      </p>
+                    }
+                  </div>
 
-                <div {...getRootProps()}>
+                  <div className="profileImageDiv">
+                    <img
+                      src={`/images/${formState.image}`}
+                      alt={formState.name}
+                      className="profileImage rounded float-right"
+                    />
+                  </div>
+                </div>
+                <div></div>
+
+                {/*<div {...getRootProps()}>
                   <input {...getInputProps()} />
                   {
                     <p>
                       Drag 'n' drop some files here, or click to select files
                     </p>
                   }
-                </div>
+                </div>*/}
+
+                {/*<div class="update__image">
+                  <div>
+                    <img
+                      src="/uploads/{{user_image}}"
+                      alt="Profile Image"
+                      className="profileImage"
+                    />
+                  </div>
+                  <div class="update__image__input">
+                    <input
+                      type="file"
+                      name="profile-file"
+                      id="profile-file"
+                      value="Upload profile picture"
+                      onChange={handleUpload}
+                    />
+                  </div>
+              </div>*/}
 
                 <button
                   className="btn btn-block btn-primary"

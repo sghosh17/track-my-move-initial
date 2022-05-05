@@ -8,6 +8,7 @@ import EstateHome from "./pages/EstateHome";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import About from "./pages/About";
 import ProfileEdit from "./pages/ProfileEdit";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -81,6 +82,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
               <Route path="*" element={<div>404 - Page does not exist</div>} />
             </Routes>
           </div>

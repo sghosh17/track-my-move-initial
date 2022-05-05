@@ -6,7 +6,7 @@ import "../profile.css";
 
 import Auth from "../utils/auth";
 
-const Profile = () => {
+const About = () => {
   const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -90,4 +90,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default About;
