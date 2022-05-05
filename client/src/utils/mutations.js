@@ -78,3 +78,30 @@ export const uploadFileMutation = gql`
     uploadFile(file: $file)
   }
 `;
+
+export const UPDATE_FORM = gql`
+  mutation UpdateForm($userId: ID, $form: InputForm) {
+    updateForm(userId: $userId, form: $form) {
+      _id
+      user {
+        _id
+        username
+        email
+        role
+        name
+        address
+        phone
+      }
+      formName
+      notes {
+        noteText
+        noteAuthor
+        createdAt
+      }
+      checkboxes {
+        checkboxName
+        status
+      }
+    }
+  }
+`;

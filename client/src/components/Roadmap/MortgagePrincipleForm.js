@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { multiStepContext } from "../../StepContext";
 import axios from "axios";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_FORM } from "../../utils/mutations";
+import { ADD_FORM, UPDATE_FORM } from "../../utils/mutations";
 import { QUERY_FORM, QUERY_FORMS } from "../../utils/queries";
 import Auth from "../../utils/auth";
 
@@ -26,19 +26,34 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
   console.log("form details - " + JSON.stringify(form));
 
   // const [uploadedFile, setUploadedFile] = useState({});
-  const [addForm, { error }] = useMutation(ADD_FORM, {
-    update(cache, { data: { addForm } }) {
-      try {
-        const { forms } = cache.readQuery({ query: QUERY_FORMS });
-        console.log(addForm);
-        cache.writeQuery({
-          query: QUERY_FORMS,
-          data: { forms: [addForm, ...forms] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    },
+  // const [addForm, { error }] = useMutation(ADD_FORM, {
+  //   update(cache, { data: { addForm } }) {
+  //     try {
+  //       const { forms } = cache.readQuery({ query: QUERY_FORMS });
+  //       console.log(addForm);
+  //       cache.writeQuery({
+  //         query: QUERY_FORMS,
+  //         data: { forms: [addForm, ...forms] },
+  //       });
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   },
+  // });
+
+  const [updateForm, { error }] = useMutation(UPDATE_FORM, {
+    // update(cache, { data: { updateForm } }) {
+    //   try {
+    //     const { forms } = cache.readQuery({ query: QUERY_FORMS });
+    //     console.log(updateForm);
+    //     cache.writeQuery({
+    //       query: QUERY_FORMS,
+    //       data: { forms: [addForm, ...forms] },
+    //     });
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // },
   });
 
   const handleSave = (e) => {
@@ -60,7 +75,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
       }); //[{noteText: state.note, noteAuthor: userData.username}],
       console.log(notes);
       console.log(userData);
-      const { data } = await addForm({
+      const { data } = await updateForm({
         variables: {
           userId: userData._id,
           form: {
@@ -112,6 +127,9 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
       }
     }
   };
+  const formCompleted = !state.checkboxes.find((checkbox) => {
+    return checkbox.status === false;
+  });
 
   return (
     <div className="sheet">
@@ -122,7 +140,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
             <input
               className="switch-button-checkbox"
               type="checkbox"
-              checked={state.loanApplication && state.applyOnline}
+              checked={formCompleted}
               onChange={(e) => {}}
             ></input>
             <label className="switch-button-label">
@@ -151,27 +169,25 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
         </div>
         <div className="checkbox">
           <ul>
-            <li>
-              <input
-                className="item"
-                name="applyOnline"
-                type="checkbox"
-                checked={state.applyOnline}
-                onChange={handleCheckboxChange}
-              />
+            {state.checkboxes.map((checkbox) => {
+              const name =
+                checkbox.checkboxName === "applyOnline"
+                  ? "Apply Online"
+                  : "Mortgage Loan Application";
+              return (
+                <li>
+                  <input
+                    className="item"
+                    name={checkbox.checkboxName}
+                    type="checkbox"
+                    checked={checkbox.status}
+                    onChange={handleCheckboxChange}
+                  />
 
-              <span>Apply online </span>
-            </li>
-            <li>
-              <input
-                className="item"
-                name="loanApplication"
-                type="checkbox"
-                checked={state.loanApplication}
-                onChange={handleCheckboxChange}
-              />
-              <span>Mortgage Loan Application </span>
-            </li>
+                  <span>{name} </span>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
@@ -200,7 +216,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
         <div>
           <h3>User comments:</h3>
           <ul>
-            {state.noteList.map((note) => (
+            {state.notes.map((note) => (
               <li>{note}</li>
             ))}
           </ul>

@@ -46,6 +46,102 @@ const resolvers = {
     addUser: async (parent, { username, email, role, password }) => {
       const user = await User.create({ username, email, role, password });
       const token = signToken(user);
+      await Form.insertMany([
+        {
+          formName: "mortgagePrincipleForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "applyOnline",
+              status: false,
+            },
+            {
+              checkboxName: "loanApplication",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+        {
+          formName: "mortgageOfferForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "loanAppointment",
+              status: false,
+            },
+            {
+              checkboxName: "offerReceived",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+
+        {
+          formName: "legalSearchForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "solicitorHired",
+              status: false,
+            },
+            {
+              checkboxName: "searchesStarted",
+              status: false,
+            },
+            {
+              checkboxName: "searchesCompleted",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+
+        {
+          formName: "surveyForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "surveyTypeDecided",
+              status: false,
+            },
+            {
+              checkboxName: "surveyCompleted",
+              status: false,
+            },
+            {
+              checkboxName: "queriesResolved",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+
+        {
+          formName: "exchangeCompletionForm",
+          notes: [],
+          checkboxes: [
+            {
+              checkboxName: "movingDateAgreed",
+              status: false,
+            },
+            {
+              checkboxName: "contractSigned",
+              status: false,
+            },
+            {
+              checkboxName: "contractExchanged",
+              status: false,
+            },
+            {
+              checkboxName: "keyCollected",
+              status: false,
+            },
+          ],
+          user: user._id,
+        },
+      ]);
       return { token, user };
     },
 

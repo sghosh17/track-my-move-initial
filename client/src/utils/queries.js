@@ -42,18 +42,11 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_FORMS = gql`
-  query Forms($userId: ID!) {
+  query Query($userId: ID!) {
     forms(userId: $userId) {
       _id
       user {
-        username
-        email
-
-        role
         _id
-        name
-        address
-        phone
       }
       formName
       notes {

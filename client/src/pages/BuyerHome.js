@@ -1,6 +1,4 @@
-// // import { useQuery } from "@apollo/client";
-
-// import { QUERY_THOUGHTS } from "../utils/queries";
+import { useQuery } from "@apollo/client";
 
 import React, { useContext, useState } from "react";
 import { multiStepContext } from "../StepContext";
@@ -17,59 +15,46 @@ import SurveyForm from "../components/Roadmap/SurveyForm";
 import ExchangeCompletionForm from "../components/Roadmap/ExchangeCompletionForm";
 
 import "../components/Roadmap/roadmap.css";
+import { QUERY_FORMS } from "../utils/queries";
+import { useEffect } from "react";
+import auth from "../utils/auth";
 
 const Home = () => {
-  // const { loading, data } = useQuery(QUERY_THOUGHTS);
-  // const thoughts = data?.thoughts || [];
-  const { buyerId } = useParams();
-  console.log(buyerId);
-  const [state, setState] = useState({
-    mortgagePrincipleForm: {
-      note: "",
-      applyOnline: false,
-      loanApplication: false,
-      noteList: [],
-      fileName: "",
-      uploadedFile: {},
-    },
-    propertyAcceptedForm: {
-      note: "",
-      offerMade: false,
-      offerAccepted: false,
-      noteList: [],
-      fileName: "",
-      uploadedFile: {},
-    },
-    mortgageOfferForm: {
-      note: "",
-      loanAppoitment: false,
-      offerReceived: false,
-      offerAccepted: false,
-      noteList: [],
-    },
-    legalSearchForm: {
-      note: "",
-      solicitorHired: false,
-      searchesStarted: false,
-      searchesCompleted: false,
-      noteList: [],
-    },
-    surveyForm: {
-      note: "",
-      surveyTypeDecided: false,
-      surveyCompleted: false,
-      queriesResolved: false,
-      noteList: [],
-    },
-    exchangeCompletionForm: {
-      note: "",
-      movingDateAgreed: false,
-      contractSigned: false,
-      contractExchanged: false,
-      keyCollected: false,
-      noteList: [],
+  const userId = auth.getProfile().data._id;
+  console.log(userId);
+  const [state, setState] = useState(null);
+  const { loading, data } = useQuery(QUERY_FORMS, {
+    variables: {
+      userId,
     },
   });
+  console.log({ data, loading });
+  useEffect(() => {
+    if (!loading) {
+      const forms = data?.forms || [];
+
+      let defaultState = {};
+      console.log({ forms });
+
+      const formNames = forms.map((form) => {
+        return form.formName;
+      });
+
+      console.log({ formNames });
+      formNames?.map((formName) => {
+        defaultState[formName] = forms.find((form) => {
+          return form.formName === formName;
+        });
+      });
+      console.log(defaultState);
+
+      setState(defaultState);
+    }
+  }, [data?.forms, loading]);
+
+  const { buyerId } = useParams();
+
+  console.log(buyerId);
 
   const handleChange = (section, name, value) => {
     setState((prevState) => ({
@@ -96,6 +81,13 @@ const Home = () => {
   };
 
   const { currentStep } = useContext(multiStepContext);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (!state) {
+    return <div>No form data</div>;
+  }
+  console.log(state);
   function showStep(step) {
     switch (step) {
       case 1:
