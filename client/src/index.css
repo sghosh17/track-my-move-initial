@@ -5,7 +5,7 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-html {
+ html {
   line-height: 1.15;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -923,8 +923,7 @@ a:hover {
 
 /* BACKGROUND UTILS */
 .bg-primary {
-  /*background-color: #2d3e50 !important;*/
-  background-color: #7f2e41 !important;
+  background-color: #2d3e50 !important;
 }
 
 .bg-info {
@@ -1173,7 +1172,7 @@ label form [type='radio'] {
 
 .container {
   width: 85%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }

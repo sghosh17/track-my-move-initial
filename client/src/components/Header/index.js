@@ -9,15 +9,10 @@ const Header = () => {
     Auth.logout();
   };
   return (
-    <header className="bg-primary text-light flex-row align-center">
-      <div className="container flex-row flex-no-wrap justify-space-between-lg justify-center align-center">
-        <div className="titleDiv">
-          <img
-            src="/logo.png"
-            alt="Track My Move"
-            className="header-logo mb-4"
-          />
-          <h1 className="mt-4">Track My Move</h1>
+    <header className="bg-primary text-light mb-4 py-3 flex-row align-center">
+      <div className="container flex-row justify-space-between-lg justify-center align-center">
+        <div>
+          <h1 className="m-0">Track My Move</h1>
 
           <p className="m-0">
             One stop shop for all you need when buying a property.
