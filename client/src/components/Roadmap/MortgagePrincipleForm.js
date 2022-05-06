@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
 import { multiStepContext } from "../../StepContext";
 import axios from "axios";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_FORM, UPDATE_FORM } from "../../utils/mutations";
-import { QUERY_FORM, QUERY_FORMS } from "../../utils/queries";
+import { ADD_FORM } from "../../utils/mutations";
+import { QUERY_FORM, QUERY_FORMS, QUERY_ME } from "../../utils/queries";
 import Auth from "../../utils/auth";
 
 const SECTION = "mortgagePrincipleForm";
@@ -15,18 +14,8 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
   const [filename, setFilename] = useState("");
   const { data: userData } = Auth.getProfile();
 
-  const { userId, formName } = useParams();
-
-  const { loading, data: myData } = useQuery(QUERY_FORM, {
-    variables: { userId: userId, formName: formName },
-  });
-
-  console.log();
-
-  const form = myData?.form || {};
-
-  console.log("form details - " + JSON.stringify(form));
-
+  const { loading, data: formData } = useQuery(QUERY_FORM);
+  const userProfile = userData?.me || {};
   // const [uploadedFile, setUploadedFile] = useState({});
   // const [addForm, { error }] = useMutation(ADD_FORM, {
   //   update(cache, { data: { addForm } }) {
