@@ -62,7 +62,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
 
     try {
       const notes = state.noteList.map((noteText) => {
-        return { noteText: noteText, noteAuthor: userData.username };
+        return { noteText, noteAuthor: userData.username };
       }); //[{noteText: state.note, noteAuthor: userData.username}],
       console.log(notes);
       console.log(userData);
@@ -208,7 +208,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
           <h3>User comments:</h3>
           <ul>
             {state.notes.map((note) => (
-              <li>{note.noteText}</li>
+              <li>{note}</li>
             ))}
           </ul>
         </div>
