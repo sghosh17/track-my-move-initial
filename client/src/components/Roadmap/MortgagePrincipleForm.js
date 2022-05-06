@@ -17,9 +17,11 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
 
   const { userId, formName } = useParams();
 
-  const { loading, myData } = useQuery(QUERY_FORM, {
+  const { loading, data: myData } = useQuery(QUERY_FORM, {
     variables: { userId: userId, formName: formName },
   });
+
+  console.log();
 
   const form = myData?.form || {};
 
@@ -71,7 +73,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
 
     try {
       const notes = state.noteList.map((noteText) => {
-        return { noteText, noteAuthor: userData.username };
+        return { noteText: noteText, noteAuthor: userData.username };
       }); //[{noteText: state.note, noteAuthor: userData.username}],
       console.log(notes);
       console.log(userData);
@@ -217,7 +219,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
           <h3>User comments:</h3>
           <ul>
             {state.notes.map((note) => (
-              <li>{note}</li>
+              <li>{note.noteText}</li>
             ))}
           </ul>
         </div>
