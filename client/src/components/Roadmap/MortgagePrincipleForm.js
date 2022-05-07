@@ -23,38 +23,7 @@ export default function MortgagePrincipleForm({ state, onChange, onAddNote }) {
 
   const form = myData?.form || {};
 
-  console.log("form details - " + JSON.stringify(form));
-
-  // const [uploadedFile, setUploadedFile] = useState({});
-  // const [addForm, { error }] = useMutation(ADD_FORM, {
-  //   update(cache, { data: { addForm } }) {
-  //     try {
-  //       const { forms } = cache.readQuery({ query: QUERY_FORMS });
-  //       console.log(addForm);
-  //       cache.writeQuery({
-  //         query: QUERY_FORMS,
-  //         data: { forms: [addForm, ...forms] },
-  //       });
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   },
-  // });
-
-  const [updateForm, { error }] = useMutation(UPDATE_FORM, {
-    // update(cache, { data: { updateForm } }) {
-    //   try {
-    //     const { forms } = cache.readQuery({ query: QUERY_FORMS });
-    //     console.log(updateForm);
-    //     cache.writeQuery({
-    //       query: QUERY_FORMS,
-    //       data: { forms: [addForm, ...forms] },
-    //     });
-    //   } catch (e) {
-    //     console.error(e);
-    //   }
-    // },
-  });
+  const [updateForm, { error }] = useMutation(UPDATE_FORM, {});
 
   const handleSave = (e) => {
     onAddNote(SECTION, "noteList", state.note);
